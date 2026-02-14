@@ -1,7 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Mission06_Higby.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MovieCollectionContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("MovieCollectionConnection")));
 
 var app = builder.Build();
 
@@ -24,6 +29,12 @@ app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MovieCollectionContext>();
+    dbContext.Database.EnsureCreated();
+}
 
 
 app.Run();
