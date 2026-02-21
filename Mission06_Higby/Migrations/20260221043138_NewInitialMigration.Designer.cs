@@ -10,8 +10,8 @@ using Mission06_Higby.Models;
 namespace Mission06_Higby.Migrations
 {
     [DbContext(typeof(MovieCollectionContext))]
-    [Migration("20260219042220_Initial")]
-    partial class Initial
+    [Migration("20260221043138_NewInitialMigration")]
+    partial class NewInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
