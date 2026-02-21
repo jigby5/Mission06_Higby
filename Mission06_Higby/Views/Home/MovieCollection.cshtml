@@ -1,0 +1,96 @@
+@model Movie
+
+@{
+    ViewData["Title"] = "Movie Collection";
+}
+
+<style>
+    .required-marker {
+        color: #dc3545;
+        font-weight: 700;
+    }
+</style>
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Movie Collection</h1>
+</div>
+
+<div class="container">
+    <form asp-action="MovieCollection" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+        
+        <div class="mb3">
+            <select asp-for="CategoryID">
+                <option value="">Select A Category</option>
+                @foreach (Category c in ViewBag.Categories)
+                {
+                    <option value="@c.CategoryID">@c.CategoryName</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label> <span class="required-marker">*</span>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Year" class="form-label"></label> <span class="required-marker">*</span>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Director" class="form-label"></label> <span class="required-marker">*</span>
+            <input asp-for="Director" class="form-control" />
+            <span asp-validation-for="Director" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Rating" class="form-label"></label> <span class="required-marker">*</span>
+            <select asp-for="Rating" class="form-select">
+                <option value="">Select a rating</option>
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+                <option value="R">R</option>
+            </select>
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Edited" class="form-label"></label>
+            <select asp-for="Edited" class="form-select">
+                <option value="">Not specified</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span asp-validation-for="Edited" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="LentTo" class="form-label"></label>
+            <input asp-for="LentTo" class="form-control" />
+            <span asp-validation-for="LentTo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CopiedToPlex" class="form-label"></label>
+            <select asp-for="CopiedToPlex" class="form-select">
+                <option value="">Not specified</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span asp-validation-for="CopiedToPlex" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label"></label>
+            <input asp-for="Notes" class="form-control" maxlength="25" />
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
