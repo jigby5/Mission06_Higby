@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mission06_Higby.Models;
 
@@ -10,8 +11,10 @@ public class Movie
     public int MovieID { get; set; }
 
     [Required]
-    [Display(Name = "Category")]
-    public string Category { get; set; } = string.Empty;
+    [ForeignKey( "CategoryID" )]
+    [Display(Name = "Category ID")]
+    public int CategoryID { get; set; } 
+    public Category Category { get; set; }
 
     [Required]
     [Display(Name = "Title")]
@@ -35,6 +38,9 @@ public class Movie
 
     [Display(Name = "Lent To")]
     public string? LentTo { get; set; }
+    
+    [Display(Name = "Copied To Plex")]
+    public bool? CopiedToPlex { get; set; }
 
     [StringLength(25, ErrorMessage = "Notes cannot exceed 25 characters.")]
     [Display(Name = "Notes")]

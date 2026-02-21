@@ -6,13 +6,12 @@ namespace Mission06_Higby.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly MovieCollectionContext _movieCollectionContext;
-
-    public HomeController(MovieCollectionContext movieCollectionContext)
+    private MovieCollectionContext _context;
+    
+    public HomeController(MovieCollectionContext context)
     {
-        _movieCollectionContext = movieCollectionContext;
+        _context = context;
     }
-
     public IActionResult Index()
     {
         return View();
@@ -23,25 +22,28 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet]
     public IActionResult MovieCollection()
     {
-        return View(new Movie());
+        ViewBag.Categories = _context.Categories.ToList();
+        return View();
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult MovieCollection(Movie movie)
+    public IActionResult MovieCollection(Movie response)
     {
-        if (!ModelState.IsValid)
-        {
-            return View(movie);
-        }
+        _context.Movies.Add(response); //adds record to the database
+        _context.SaveChanges();
 
-        _movieCollectionContext.Movies.Add(movie);
-        _movieCollectionContext.SaveChanges();
+        return View("Confirmation", response);
+    }
 
-        return View("Confirmation", movie);
+    public IActionResult MovieView()
+    {
+        // linq language in dotnet
+        var movies = _context.Movies
+            .OrderBy(x => x.Title).ToList();
+        
+        return View(movies);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

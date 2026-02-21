@@ -2,26 +2,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mission06_Higby.Models;
 
-public class MovieCollectionContext : DbContext
+public class MovieCollectionContext : DbContext //Liaison
 {
     public MovieCollectionContext(DbContextOptions<MovieCollectionContext> options) : base(options)
     {
     }
-
-    public DbSet<Movie> Movies => Set<Movie>();
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Movie>(entity =>
-        {
-            entity.HasKey(m => m.MovieID);
-            entity.Property(m => m.Category).IsRequired().HasMaxLength(50);
-            entity.Property(m => m.Title).IsRequired().HasMaxLength(150);
-            entity.Property(m => m.Director).IsRequired().HasMaxLength(100);
-            entity.Property(m => m.Rating).IsRequired().HasMaxLength(5);
-            entity.Property(m => m.LentTo).HasMaxLength(100);
-            entity.Property(m => m.Notes).HasMaxLength(25);
-            entity.ToTable(t => t.HasCheckConstraint("CK_Movies_Rating", "Rating IN ('G','PG','PG-13','R')"));
-        });
+        modelBuilder.Entity<Category>().HasData(
+            new Category { CategoryID = 1, CategoryName = "Action" },
+            new Category { CategoryID = 2, CategoryName = "Drama" },
+            new Category { CategoryID = 3, CategoryName = "Romance" },
+            new Category { CategoryID = 4, CategoryName = "Comedy" }
+        );
     }
 }

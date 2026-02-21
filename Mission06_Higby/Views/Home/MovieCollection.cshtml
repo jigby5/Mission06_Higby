@@ -18,17 +18,15 @@
 <div class="container">
     <form asp-action="MovieCollection" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
-
-        <div class="mb-3">
-            <label asp-for="MovieID" class="form-label"></label> <span class="required-marker">*</span>
-            <input asp-for="MovieID" class="form-control" />
-            <span asp-validation-for="MovieID" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Category" class="form-label"></label> <span class="required-marker">*</span>
-            <input asp-for="Category" class="form-control" />
-            <span asp-validation-for="Category" class="text-danger"></span>
+        
+        <div class="mb3">
+            <select asp-for="CategoryID">
+                <option value="">Select A Category</option>
+                @foreach (Category c in ViewBag.Categories)
+                {
+                    <option value="@c.CategoryID">@c.CategoryName</option>
+                }
+            </select>
         </div>
 
         <div class="mb-3">
@@ -78,6 +76,16 @@
         </div>
 
         <div class="mb-3">
+            <label asp-for="CopiedToPlex" class="form-label"></label>
+            <select asp-for="CopiedToPlex" class="form-select">
+                <option value="">Not specified</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span asp-validation-for="CopiedToPlex" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
             <label asp-for="Notes" class="form-label"></label>
             <input asp-for="Notes" class="form-control" maxlength="25" />
             <span asp-validation-for="Notes" class="text-danger"></span>
@@ -86,7 +94,3 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
