@@ -7,7 +7,7 @@
 namespace Mission06_Higby.Migrations
 {
     /// <inheritdoc />
-    public partial class NewInitialMigration : Migration
+    public partial class NewNewInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
